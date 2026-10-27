@@ -115,7 +115,7 @@ svg[data-icon] {
 
 .panel {
   background: var(--surface);
-  border: 1px solid var(--border);
+  border: 1px var(--box-border-style) var(--border);
 }
 
 .btn {
@@ -129,7 +129,7 @@ svg[data-icon] {
   text-decoration: none;
   color: var(--accent);
   background: transparent;
-  border: 1px solid var(--accent);
+  border: 1px var(--box-border-style) var(--accent);
   cursor: pointer;
 }
 

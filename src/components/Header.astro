@@ -33,7 +33,7 @@ const isActive = (href: string) => (href === '/' ? path === '/' : path.startsWit
     z-index: 5;
     background: color-mix(in oklch, var(--bg) 85%, transparent);
     backdrop-filter: blur(8px);
-    border-bottom: 1px solid var(--border);
+    border-bottom: 1px var(--divider-style) var(--border);
   }
 
   .bar {

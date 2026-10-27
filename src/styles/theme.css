@@ -6,6 +6,10 @@
 
 :root {
   --hue: 230;
+
+  /* solid | dashed | dotted. Boxes: panels, buttons, code, media. Dividers: lines between sections and rows. */
+  --box-border-style: dashed;
+  --divider-style: dashed;
 }
 
 :root,
