@@ -1,0 +1,57 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import { getTags, tagUrl } from '../../../lib/posts';
+
+const tags = await getTags();
+---
+
+<BaseLayout title="Tags" description="All blog topics.">
+  <div class="container">
+    <header>
+      <p class="label">Writing</p>
+      <h1>Tags</h1>
+    </header>
+
+    {
+      tags.length === 0 ? (
+        <p class="empty mono">No tags yet.</p>
+      ) : (
+        <ul class="tags">
+          {tags.map((tag) => (
+            <li>
+              <a class="btn btn-quiet" href={tagUrl(tag.name)}>
+                #{tag.name}
+                <span class="count">{tag.posts.length}</span>
+              </a>
+            </li>
+          ))}
+        </ul>
+      )
+    }
+  </div>
+</BaseLayout>
+
+<style>
+  header {
+    display: grid;
+    gap: 0.75rem;
+    margin-bottom: 2rem;
+  }
+
+  .tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.625rem;
+    padding: 0;
+    list-style: none;
+  }
+
+  .count {
+    color: var(--accent);
+  }
+
+  .empty {
+    font-size: 0.8125rem;
+    color: var(--muted);
+  }
+</style>

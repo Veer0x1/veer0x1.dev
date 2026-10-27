@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 200" font-family="monospace" font-size="16">
+  <rect width="640" height="200" fill="#14171c"/>
+  <g fill="none" stroke="#5cb8f5" stroke-width="2">
+    <rect x="40" y="70" width="140" height="60"/>
+    <rect x="250" y="70" width="140" height="60"/>
+    <rect x="460" y="70" width="140" height="60"/>
+    <path d="M180 100h70M390 100h70"/>
+    <path d="M240 94l10 6-10 6M450 94l10 6-10 6"/>
+  </g>
+  <g fill="#e6e8eb" text-anchor="middle">
+    <text x="110" y="105">write</text>
+    <text x="320" y="105">build</text>
+    <text x="530" y="105">publish</text>
+  </g>
+</svg>

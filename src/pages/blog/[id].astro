@@ -1,0 +1,78 @@
+---
+import { render } from 'astro:content';
+import { Icon } from 'astro-icon/components';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import FormattedDate from '../../components/FormattedDate.astro';
+import TagList from '../../components/TagList.astro';
+import { getPosts, type Post } from '../../lib/posts';
+import '../../styles/prose.css';
+
+export async function getStaticPaths() {
+  const posts = await getPosts();
+  return posts.map((post) => ({ params: { id: post.id }, props: { post } }));
+}
+
+interface Props {
+  post: Post;
+}
+
+const { post } = Astro.props;
+const { title, description, pubDate, updatedDate, tags } = post.data;
+const { Content } = await render(post);
+---
+
+<BaseLayout title={title} description={description} type="article">
+  <article class="container">
+    <a class="back mono" href="/blog"><Icon name="lucide:arrow-left" aria-hidden="true" /> All posts</a>
+
+    <header>
+      <h1>{title}</h1>
+      <p class="meta mono">
+        <FormattedDate date={pubDate} />
+        {
+          updatedDate && (
+            <span>
+              Updated <FormattedDate date={updatedDate} />
+            </span>
+          )
+        }
+      </p>
+      <TagList tags={tags} />
+    </header>
+
+    <div class="prose">
+      <Content />
+    </div>
+  </article>
+</BaseLayout>
+
+<style>
+  .back {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35em;
+    font-size: 0.75rem;
+    color: var(--muted);
+    text-decoration: none;
+  }
+
+  .back:hover {
+    color: var(--accent);
+  }
+
+  header {
+    display: grid;
+    gap: 0.75rem;
+    margin-block: 1.5rem 2.5rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.25rem 1rem;
+    font-size: 0.75rem;
+    color: var(--muted);
+  }
+</style>

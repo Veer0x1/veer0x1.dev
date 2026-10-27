@@ -1,0 +1,40 @@
+---
+import { Icon } from 'astro-icon/components';
+import { site } from '../site.config';
+
+interface Props {
+  variant?: 'buttons' | 'icons';
+}
+
+const { variant = 'buttons' } = Astro.props;
+const isExternal = (href: string) => href.startsWith('http');
+---
+
+<ul class="socials">
+  {
+    site.socials.map((link) => (
+      <li>
+        <a
+          href={link.href}
+          class={variant === 'buttons' ? 'btn' : 'icon-link'}
+          aria-label={variant === 'icons' ? link.label : undefined}
+          target={isExternal(link.href) ? '_blank' : undefined}
+          rel={isExternal(link.href) ? 'noopener noreferrer' : undefined}
+        >
+          <Icon name={link.icon} aria-hidden="true" />
+          {variant === 'buttons' && link.label}
+        </a>
+      </li>
+    ))
+  }
+</ul>
+
+<style>
+  .socials {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.625rem;
+    padding: 0;
+    list-style: none;
+  }
+</style>

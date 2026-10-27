@@ -1,0 +1,43 @@
+---
+import { Icon } from 'astro-icon/components';
+import SocialLinks from './SocialLinks.astro';
+import { site } from '../site.config';
+---
+
+<footer>
+  <div class="container bar">
+    <p class="mono">&copy; {new Date().getFullYear()} {site.name}</p>
+    <div class="links">
+      <SocialLinks variant="icons" />
+      <a class="icon-link" href="/rss.xml" aria-label="RSS feed">
+        <Icon name="lucide:rss" aria-hidden="true" />
+      </a>
+    </div>
+  </div>
+</footer>
+
+<style>
+  footer {
+    border-top: 1px solid var(--border);
+  }
+
+  .bar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem 1.5rem;
+    padding-block: 1.5rem;
+  }
+
+  p {
+    font-size: 0.75rem;
+    color: var(--muted);
+  }
+
+  .links {
+    display: flex;
+    align-items: center;
+    gap: 0.625rem;
+  }
+</style>

@@ -1,0 +1,40 @@
+/*
+  The only file with colors. Components use these tokens and never hard-code a color.
+  Change --hue to recolor the whole site in both themes: 230 blue, 160 green, 25 orange, 300 purple.
+  Fonts (--font-sans, --font-mono) are configured in astro.config.ts.
+*/
+
+:root {
+  --hue: 230;
+}
+
+:root,
+:root[data-theme='light'] {
+  color-scheme: light;
+  --bg: oklch(0.99 0.002 var(--hue));
+  --surface: oklch(0.96 0.005 var(--hue));
+  --surface-hover: oklch(0.93 0.008 var(--hue));
+  --text: oklch(0.18 0.01 var(--hue));
+  --muted: oklch(0.5 0.01 var(--hue));
+  --border: oklch(0.88 0.015 var(--hue));
+  --border-strong: oklch(0.76 0.03 var(--hue));
+  --accent: oklch(0.55 0.16 var(--hue));
+  --accent-contrast: oklch(0.99 0 0);
+  --highlight: oklch(0.55 0.16 var(--hue) / 0.18);
+  --code-bg: var(--surface);
+}
+
+:root[data-theme='dark'] {
+  color-scheme: dark;
+  --bg: oklch(0.16 0.004 var(--hue));
+  --surface: oklch(0.2 0.006 var(--hue));
+  --surface-hover: oklch(0.24 0.008 var(--hue));
+  --text: oklch(0.97 0 0);
+  --muted: oklch(0.68 0.01 var(--hue));
+  --border: oklch(0.32 0.02 var(--hue));
+  --border-strong: oklch(0.45 0.03 var(--hue));
+  --accent: oklch(0.74 0.14 var(--hue));
+  --accent-contrast: oklch(0.16 0.004 var(--hue));
+  --highlight: oklch(0.74 0.14 var(--hue) / 0.25);
+  --code-bg: var(--surface);
+}

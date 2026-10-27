@@ -1,0 +1,58 @@
+---
+import { Icon } from 'astro-icon/components';
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import PostList from '../../../components/PostList.astro';
+import { getTags, type Tag } from '../../../lib/posts';
+
+export async function getStaticPaths() {
+  const tags = await getTags();
+  return tags.map((tag) => ({ params: { tag: tag.name }, props: { tag } }));
+}
+
+interface Props {
+  tag: Tag;
+}
+
+const { tag } = Astro.props;
+const count = `${tag.posts.length} ${tag.posts.length === 1 ? 'post' : 'posts'}`;
+---
+
+<BaseLayout title={`#${tag.name}`} description={`Posts tagged #${tag.name}.`}>
+  <div class="container">
+    <a class="back mono" href="/blog/tags"><Icon name="lucide:arrow-left" aria-hidden="true" /> All tags</a>
+
+    <header>
+      <p class="label">Tag</p>
+      <h1>#{tag.name}</h1>
+      <p class="count mono">{count}</p>
+    </header>
+
+    <PostList posts={tag.posts} />
+  </div>
+</BaseLayout>
+
+<style>
+  .back {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35em;
+    font-size: 0.75rem;
+    color: var(--muted);
+    text-decoration: none;
+  }
+
+  .back:hover {
+    color: var(--accent);
+  }
+
+  header {
+    display: grid;
+    gap: 0.75rem;
+    margin-block: 1.5rem 2rem;
+  }
+
+  .count {
+    font-size: 0.75rem;
+    color: var(--muted);
+  }
+</style>

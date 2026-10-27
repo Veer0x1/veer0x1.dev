@@ -1,0 +1,113 @@
+---
+import FormattedDate from './FormattedDate.astro';
+import TagList from './TagList.astro';
+import { postUrl, type Post } from '../lib/posts';
+
+interface Props {
+  posts: Post[];
+}
+
+const { posts } = Astro.props;
+---
+
+{
+  posts.length === 0 ? (
+    <p class="empty mono">No posts yet.</p>
+  ) : (
+    <ul class="panel">
+      {posts.map((post) => (
+        <li class="item">
+          <span class="date mono">
+            <FormattedDate date={post.data.pubDate} />
+          </span>
+          <div class="body">
+            <a class="title" href={postUrl(post)}>
+              {post.data.title}
+              {post.data.draft && <span class="draft mono">draft</span>}
+            </a>
+            <p class="description">{post.data.description}</p>
+            <TagList tags={post.data.tags} />
+          </div>
+        </li>
+      ))}
+    </ul>
+  )
+}
+
+<style>
+  ul {
+    padding: 0;
+    list-style: none;
+  }
+
+  /* The title link stretches over the whole row; tag links sit above it */
+  .item {
+    position: relative;
+    display: grid;
+    gap: 0.25rem 1.5rem;
+    padding: 1rem 1.25rem;
+  }
+
+  .item + .item {
+    border-top: 1px solid var(--border);
+  }
+
+  .item:hover,
+  .item:focus-within {
+    background: var(--surface-hover);
+  }
+
+  /* Date beside the title on wider screens, stacked above it on phones */
+  @media (min-width: 40rem) {
+    .item {
+      grid-template-columns: 7.5rem 1fr;
+    }
+  }
+
+  .date {
+    font-size: 0.75rem;
+    line-height: 1.9;
+    color: var(--muted);
+  }
+
+  .body {
+    display: grid;
+    gap: 0.25rem;
+  }
+
+  .title {
+    font-weight: 500;
+    line-height: 1.4;
+    color: var(--text);
+    text-decoration: none;
+  }
+
+  .title::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+  }
+
+  .item:hover .title {
+    color: var(--accent);
+  }
+
+  .description {
+    font-size: 0.9em;
+    color: var(--muted);
+  }
+
+  .draft {
+    margin-left: 0.5rem;
+    padding: 0.1em 0.4em;
+    font-size: 0.6875rem;
+    color: var(--accent);
+    border: 1px solid var(--accent);
+    vertical-align: middle;
+  }
+
+  .empty {
+    font-size: 0.8125rem;
+    color: var(--muted);
+  }
+</style>

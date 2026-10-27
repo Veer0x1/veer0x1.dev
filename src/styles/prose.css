@@ -1,0 +1,115 @@
+/* Typography for rendered Markdown/MDX. Applied by wrapping content in .prose */
+
+.prose > * + * {
+  margin-top: 1.25em;
+}
+
+.prose :is(h2, h3, h4) {
+  margin-top: 2em;
+  scroll-margin-top: calc(var(--header-height) + 1rem);
+}
+
+.prose h2 {
+  font-size: 1.5em;
+}
+
+.prose h3 {
+  font-size: 1.2em;
+}
+
+.prose :is(h2, h3, h4) + * {
+  margin-top: 0.75em;
+}
+
+.prose :is(ul, ol) {
+  padding-left: 1.5em;
+}
+
+.prose li + li {
+  margin-top: 0.35em;
+}
+
+.prose li::marker {
+  color: var(--muted);
+}
+
+.prose strong {
+  font-weight: 600;
+}
+
+.prose mark {
+  background: var(--highlight);
+  color: inherit;
+  padding: 0 0.15em;
+}
+
+.prose blockquote {
+  padding-left: 1em;
+  border-left: 2px solid var(--accent);
+  color: var(--muted);
+}
+
+.prose hr {
+  border: 0;
+  border-top: 1px solid var(--border);
+  margin-block: 2.5em;
+}
+
+.prose :not(pre) > code {
+  font-family: var(--font-mono);
+  font-size: 0.875em;
+  padding: 0.1em 0.35em;
+  background: var(--code-bg);
+  border: 1px solid var(--border);
+}
+
+.prose pre {
+  font-family: var(--font-mono);
+  font-size: 0.8125rem;
+  line-height: 1.6;
+  padding: 1rem 1.25rem;
+  overflow-x: auto;
+  background: var(--code-bg) !important;
+  border: 1px solid var(--border);
+}
+
+.prose pre code {
+  font-family: inherit;
+}
+
+.prose :is(img, video, iframe) {
+  border: 1px solid var(--border);
+}
+
+.prose iframe {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+}
+
+.prose figure figcaption {
+  margin-top: 0.5em;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--muted);
+  text-align: center;
+}
+
+/* Wide tables scroll inside their own box instead of the page */
+.prose table {
+  display: block;
+  max-width: 100%;
+  overflow-x: auto;
+  border-collapse: collapse;
+  font-size: 0.9375em;
+}
+
+.prose :is(th, td) {
+  padding: 0.5em 0.75em;
+  border: 1px solid var(--border);
+  text-align: left;
+}
+
+.prose th {
+  background: var(--surface);
+  font-weight: 600;
+}

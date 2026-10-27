@@ -1,0 +1,43 @@
+---
+import { tagUrl } from '../lib/posts';
+
+interface Props {
+  tags: readonly string[];
+}
+
+const { tags } = Astro.props;
+---
+
+{
+  tags.length > 0 && (
+    <ul class="tags mono" aria-label="Tags">
+      {tags.map((tag) => (
+        <li>
+          <a href={tagUrl(tag)}>#{tag}</a>
+        </li>
+      ))}
+    </ul>
+  )
+}
+
+<style>
+  .tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.25rem 0.75rem;
+    padding: 0;
+    list-style: none;
+    font-size: 0.75rem;
+  }
+
+  a {
+    position: relative;
+    z-index: 1;
+    color: var(--accent);
+    text-decoration: none;
+  }
+
+  a:hover {
+    text-decoration: underline;
+  }
+</style>
