@@ -1,7 +1,7 @@
 ---
 import FormattedDate from './FormattedDate.astro';
 import TagList from './TagList.astro';
-import { postUrl, type Post } from '../lib/posts';
+import { postUrl, readingTime, type Post } from '../lib/posts';
 
 interface Props {
   posts: Post[];
@@ -17,9 +17,10 @@ const { posts } = Astro.props;
     <ul class="panel">
       {posts.map((post) => (
         <li class="item">
-          <span class="date mono">
+          <p class="meta mono">
             <FormattedDate date={post.data.pubDate} />
-          </span>
+            <span>{readingTime(post)}</span>
+          </p>
           <div class="body">
             <a class="title" href={postUrl(post)}>
               {post.data.title}
@@ -57,17 +58,35 @@ const { posts } = Astro.props;
     background: var(--surface-hover);
   }
 
-  /* Date beside the title on wider screens, stacked above it on phones */
+  /* Phones: date and reading time on one line above the title.
+     Wider screens: both stacked in a column beside the title. */
+  .meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0 0.75rem;
+    font-size: 0.75rem;
+    line-height: 1.9;
+    color: var(--muted);
+  }
+
+  .meta > :global(:not(:first-child))::before {
+    content: '|' / '';
+    margin-right: 0.75rem;
+    color: var(--border-strong);
+  }
+
   @media (min-width: 40rem) {
     .item {
       grid-template-columns: 7.5rem 1fr;
     }
-  }
 
-  .date {
-    font-size: 0.75rem;
-    line-height: 1.9;
-    color: var(--muted);
+    .meta {
+      flex-direction: column;
+    }
+
+    .meta > :global(:not(:first-child))::before {
+      content: none;
+    }
   }
 
   .body {

@@ -4,7 +4,8 @@ import { Icon } from 'astro-icon/components';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import FormattedDate from '../../components/FormattedDate.astro';
 import TagList from '../../components/TagList.astro';
-import { getPosts, type Post } from '../../lib/posts';
+import ReadingProgress from '../../components/ReadingProgress.astro';
+import { getPosts, readingTime, type Post } from '../../lib/posts';
 import '../../styles/prose.css';
 
 export async function getStaticPaths() {
@@ -23,6 +24,7 @@ const { Content } = await render(post);
 
 <BaseLayout title={title} description={description} type="article">
   <article class="container">
+    <ReadingProgress />
     <a class="back mono" href="/blog"><Icon name="lucide:arrow-left" aria-hidden="true" /> All posts</a>
 
     <header>
@@ -36,6 +38,7 @@ const { Content } = await render(post);
             </span>
           )
         }
+        <span>{readingTime(post)}</span>
       </p>
       <TagList tags={tags} />
     </header>
@@ -71,8 +74,15 @@ const { Content } = await render(post);
   .meta {
     display: flex;
     flex-wrap: wrap;
-    gap: 0.25rem 1rem;
+    gap: 0.25rem 0.75rem;
     font-size: 0.75rem;
     color: var(--muted);
+  }
+
+  /* Decorative pipe between items; the empty alt text keeps screen readers from announcing it */
+  .meta > :global(:not(:first-child))::before {
+    content: '|' / '';
+    margin-right: 0.75rem;
+    color: var(--border-strong);
   }
 </style>

@@ -10,6 +10,15 @@ export async function getPosts(): Promise<Post[]> {
 
 export const postUrl = (post: Post) => `/blog/${post.id}`;
 
+const WORDS_PER_MINUTE = 200;
+
+/** Estimated from the raw Markdown at build time, e.g. "4 min read". */
+export function readingTime(post: Post): string {
+  const text = (post.body ?? '').replace(/<[^>]+>/g, ' ');
+  const words = text.split(/\s+/).filter(Boolean).length;
+  return `${Math.max(1, Math.round(words / WORDS_PER_MINUTE))} min read`;
+}
+
 export const tagUrl = (tag: string) => `/blog/tags/${tag}`;
 
 export interface Tag {
