@@ -6,6 +6,8 @@ import { site } from './src/site.config';
 
 export default defineConfig({
   site: site.url,
+  // Pages are built as folders (/blog/index.html), so their canonical URLs end in /
+  trailingSlash: 'always',
   integrations: [mdx(), sitemap(), icon()],
 
   fonts: [

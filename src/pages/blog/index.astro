@@ -2,7 +2,7 @@
 import { Icon } from 'astro-icon/components';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import PostList from '../../components/PostList.astro';
-import { getPosts } from '../../lib/posts';
+import { getPosts, tagsUrl } from '../../lib/posts';
 
 const posts = await getPosts();
 ---
@@ -13,7 +13,7 @@ const posts = await getPosts();
       <p class="label">Writing</p>
       <h1>Blog</h1>
       <p class="lede">Notes and articles on software engineering.</p>
-      <a class="tags-link mono" href="/blog/tags">Browse by tag <Icon name="lucide:arrow-right" aria-hidden="true" /></a>
+      <a class="tags-link mono" href={tagsUrl}>Browse by tag <Icon name="lucide:arrow-right" aria-hidden="true" /></a>
     </header>
     <PostList posts={posts} />
   </div>

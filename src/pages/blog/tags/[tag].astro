@@ -2,7 +2,7 @@
 import { Icon } from 'astro-icon/components';
 import BaseLayout from '../../../layouts/BaseLayout.astro';
 import PostList from '../../../components/PostList.astro';
-import { getTags, type Tag } from '../../../lib/posts';
+import { getTags, tagsUrl, type Tag } from '../../../lib/posts';
 
 export async function getStaticPaths() {
   const tags = await getTags();
@@ -19,7 +19,7 @@ const count = `${tag.posts.length} ${tag.posts.length === 1 ? 'post' : 'posts'}`
 
 <BaseLayout title={`#${tag.name}`} description={`Posts tagged #${tag.name}.`}>
   <div class="container">
-    <a class="back mono" href="/blog/tags"><Icon name="lucide:arrow-left" aria-hidden="true" /> All tags</a>
+    <a class="back mono" href={tagsUrl}><Icon name="lucide:arrow-left" aria-hidden="true" /> All tags</a>
 
     <header>
       <p class="label">Tag</p>

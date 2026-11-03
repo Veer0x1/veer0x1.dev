@@ -7,7 +7,7 @@ import Section from '../components/Section.astro';
 import SkillGroups from '../components/SkillGroups.astro';
 import SocialLinks from '../components/SocialLinks.astro';
 import { about, achievements, education, experience, projects, skills } from '../data/profile';
-import { getPosts } from '../lib/posts';
+import { blogUrl, getPosts } from '../lib/posts';
 import { site } from '../site.config';
 
 const recentPosts = (await getPosts()).slice(0, 3);
@@ -34,7 +34,7 @@ const recentPosts = (await getPosts()).slice(0, 3);
     </Section>
 
     <Section id="recent" title="Recent writing">
-      <a slot="action" class="all mono" href="/blog">All posts <Icon name="lucide:arrow-right" aria-hidden="true" /></a>
+      <a slot="action" class="all mono" href={blogUrl}>All posts <Icon name="lucide:arrow-right" aria-hidden="true" /></a>
       <PostList posts={recentPosts} />
     </Section>
 

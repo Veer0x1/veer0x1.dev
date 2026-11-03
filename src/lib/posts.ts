@@ -8,7 +8,11 @@ export async function getPosts(): Promise<Post[]> {
   return posts.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
 }
 
-export const postUrl = (post: Post) => `/blog/${post.id}`;
+// Routes. Every page URL ends in / to match the built folders, so links never redirect.
+export const blogUrl = '/blog/';
+export const tagsUrl = '/blog/tags/';
+export const postUrl = (post: Post) => `/blog/${post.id}/`;
+export const tagUrl = (tag: string) => `/blog/tags/${tag}/`;
 
 const WORDS_PER_MINUTE = 200;
 
@@ -18,8 +22,6 @@ export function readingTime(post: Post): string {
   const words = text.split(/\s+/).filter(Boolean).length;
   return `${Math.max(1, Math.round(words / WORDS_PER_MINUTE))} min read`;
 }
-
-export const tagUrl = (tag: string) => `/blog/tags/${tag}`;
 
 export interface Tag {
   name: string;

@@ -5,7 +5,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import FormattedDate from '../../components/FormattedDate.astro';
 import TagList from '../../components/TagList.astro';
 import ReadingProgress from '../../components/ReadingProgress.astro';
-import { getPosts, readingTime, type Post } from '../../lib/posts';
+import { blogUrl, getPosts, readingTime, type Post } from '../../lib/posts';
 import '../../styles/prose.css';
 
 export async function getStaticPaths() {
@@ -25,7 +25,7 @@ const { Content } = await render(post);
 <BaseLayout title={title} description={description} type="article">
   <article class="container">
     <ReadingProgress />
-    <a class="back mono" href="/blog"><Icon name="lucide:arrow-left" aria-hidden="true" /> All posts</a>
+    <a class="back mono" href={blogUrl}><Icon name="lucide:arrow-left" aria-hidden="true" /> All posts</a>
 
     <header>
       <h1>{title}</h1>
