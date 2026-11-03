@@ -1,0 +1,127 @@
+---
+import { Icon } from 'astro-icon/components';
+import type { Entry } from '../data/profile';
+
+interface Props {
+  entries: readonly Entry[];
+}
+
+const { entries } = Astro.props;
+---
+
+<ul class="panel">
+  {
+    entries.map((entry) => (
+      <li class="item">
+        <p class="period mono">{entry.period}</p>
+        <div class="body">
+          <h3 class="title">
+            {entry.href ? (
+              <a href={entry.href} target="_blank" rel="noopener noreferrer">
+                {entry.title}
+                <Icon name="lucide:arrow-up-right" aria-hidden="true" />
+              </a>
+            ) : (
+              entry.title
+            )}
+          </h3>
+          {entry.subtitle && <p class="subtitle">{entry.subtitle}</p>}
+          {entry.points && entry.points.length > 0 && (
+            <ul class="points">
+              {entry.points.map((point) => (
+                <li>{point}</li>
+              ))}
+            </ul>
+          )}
+          {entry.tags && entry.tags.length > 0 && (
+            <ul class="tags mono" aria-label="Technologies">
+              {entry.tags.map((tag) => (
+                <li>{tag}</li>
+              ))}
+            </ul>
+          )}
+        </div>
+      </li>
+    ))
+  }
+</ul>
+
+<style>
+  ul {
+    padding: 0;
+    list-style: none;
+  }
+
+  .item {
+    display: grid;
+    gap: 0.25rem 1.5rem;
+    padding: 1rem 1.25rem;
+  }
+
+  .item + .item {
+    border-top: 1px var(--divider-style) var(--border);
+  }
+
+  /* Period beside the content on wider screens, above it on phones */
+  @media (min-width: 40rem) {
+    .item {
+      grid-template-columns: 9rem 1fr;
+    }
+  }
+
+  .period {
+    font-size: 0.75rem;
+    line-height: 1.9;
+    color: var(--muted);
+  }
+
+  .body {
+    display: grid;
+    gap: 0.35rem;
+  }
+
+  .title {
+    font-size: 1rem;
+    font-weight: 500;
+    line-height: 1.4;
+  }
+
+  .title a {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25em;
+    color: var(--text);
+    text-decoration: none;
+  }
+
+  .title a:hover {
+    color: var(--accent);
+  }
+
+  .subtitle {
+    font-size: 0.9em;
+    color: var(--muted);
+  }
+
+  .points {
+    display: grid;
+    gap: 0.35rem;
+    padding-left: 1.1em;
+    list-style: square;
+    font-size: 0.9375rem;
+    color: var(--muted);
+  }
+
+  .points li::marker {
+    color: var(--border-strong);
+  }
+
+  .tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.25rem 0.75rem;
+    margin-top: 0.25rem;
+    font-size: 0.75rem;
+    color: var(--accent);
+  }
+</style>

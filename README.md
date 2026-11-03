@@ -1,6 +1,10 @@
 # Personal site
 
-Static personal site and blog built with [Astro](https://docs.astro.build).
+Static personal site and blog built with [Astro](https://docs.astro.build), live at [veer0x1.dev](https://veer0x1.dev).
+
+## Deploys
+
+Hosted on Cloudflare Workers (static assets, config in `wrangler.jsonc`). Every push to `main` builds and deploys automatically; other branches get a preview URL.
 
 ## Commands
 
@@ -19,7 +23,8 @@ Static personal site and blog built with [Astro](https://docs.astro.build).
 | Name, tagline, links, nav, URL  | `src/site.config.ts`         |
 | Colors (both themes), accent hue | `src/styles/theme.css`       |
 | Fonts                           | `fonts` in `astro.config.ts` |
-| About text                      | `src/pages/index.astro`      |
+| About, experience, projects, skills | `src/data/profile.ts`    |
+| Info page section order         | `src/pages/index.astro`      |
 | Post typography                 | `src/styles/prose.css`       |
 | Post frontmatter schema         | `src/content.config.ts`      |
 
