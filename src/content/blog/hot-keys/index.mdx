@@ -1,0 +1,45 @@
+---
+title: 'Handling hot keys'
+description: ''
+pubDate: 2026-11-08
+tags: ['hot-keys', 'cache', 'system-design']
+---
+
+Hi, this is my first blog, I always wanted to write technical blogs about the things that I learned or things I find interesting and which are worth sharing, 
+from my college days but my laziness and doubts prevented me from writing it. Now that I have graduated and started another chapter of my life as a software engineer,
+and all of my friends are in different cities so I get plenty of time to overthink. So I want to use this time to learn new things and share with everyone.
+
+Initially I didn't have any idea regarding what my first blog should be about. Then I figured it would be a good idea to begin with a topic which I wasn't able to answer
+correctly in an interview. So let me start with a problem interviewer asked me.
+
+
+The problem he asked was "there's a viral post which is being read by millions of users, how would you handle it?"
+
+So I started with basic solution to not overwhelm our database we can cache this post.
+Then interviewer presented a scenario in which our cache server was also getting overwhelmed by
+continuous read on this one particular key (post), so how can we solve this?
+
+I suggested that we can keep multiple replicas of our cache service. Then the interviewer said it
+would be lot of effort to spin up multiple replicas because of frequent reads of a single key. At this
+point I didn't know how else we can solve this, but the interviewer was very supportive so when I asked
+him at the end of interview, about the solution he was expecting. He told, if a certain key is being read
+from cache quite frequent, then we can store that key in our server's memory with some TTL, this would save
+our cache service from getting overloaded and an additional benifit of reducing a network call.
+
+Now that I look back and think, I wonder how simple the solution was. After interview I read more about
+how to handle these <mark>hot keys</mark>. And I want to share about it.
+
+This is quite a common pattern where certain keys are read or written more often than other. I want
+to talk about how we can handle these hot keys and about handling writes of hot keys in another blog, as none of us
+has attention span to read long blogs ;).
+
+The first step would be to detect the hot keys and signal it back to application requesting the data. Now the question is
+which service should decide the hot key? Should it be your application requesting the data, or storage service providing the
+data or an API layer between them. And the answer depends on your system, but the best candidate would be API layer, as it sees all the traffic
+from all clients, so counts are global and accurate. Which is not possible in case of shards of your application or storage service
+as they can only see the traffic reaching them. I would definitely not choose storage service, as tracking per-key rate costs CPU on the
+node that is already overloaded.
+
+And the best metric (again this depends on your need) we could use to find out a hot key is <mark>request rate per key over a sliding window</mark> and flag the key when
+rates stay above the threshold for whole window. And once our application receives the data with hot key flag, we will store it on our application's
+cache. And make sure you use appropriate TTL while storing on application so that your application doesn't serve stale data.

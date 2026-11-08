@@ -3,6 +3,7 @@ title: 'Hello, world'
 description: 'The first post on this site, and why it exists.'
 pubDate: 2026-10-28
 tags: [meta, astro]
+draft: true
 ---
 
 This is the first post. Every post is a Markdown file in `src/content/blog`, and the folder or file name becomes its URL.
